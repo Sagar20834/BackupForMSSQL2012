@@ -47,30 +47,35 @@ namespace Backup
         private void Form1_Load(object sender, EventArgs e)
         {
             PopulateDatabaseComboBox();
-            string drive = "D:" ; // Replace with the desired drive letter
-            string folderName = "Backup";
+            PopulateDriveComboBox();
 
-            string path = Path.Combine(drive, folderName);
 
-            if (Directory.Exists(path))
-            {
-
-            }
-            else
-            {
-                try
-                {
-                    Directory.CreateDirectory(path);
-                   // MessageBox.Show("Folder created successfully.");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error creating folder: " + ex.Message);
-                }
-            }
 
 
         }
+        private void PopulateDriveComboBox()
+        {
+            DriveInfo[] allDrives = DriveInfo.GetDrives();
+
+            foreach (DriveInfo drive in allDrives)
+            {
+                if (drive.IsReady)
+                {
+                    DriveComboBox.Items.Add(drive.Name);
+                }
+            }
+
+            if (DriveComboBox.Items.Count > 0)
+            {
+                DriveComboBox.SelectedIndex = 0; // Optionally, select the first drive by default.
+            }
+            else
+            {
+                DriveComboBox.Items.Add("No available drives");
+                DriveComboBox.Enabled = false; // Disable the ComboBox if no drives are available.
+            }
+        }
+
 
         private void PopulateDatabaseComboBox()
         {
@@ -88,7 +93,7 @@ namespace Backup
             {
 
 
-                SqlCommand command = new SqlCommand("SELECT name FROM sys.databases WHERE database_id > 4 AND name != 'ReportServer' AND name != 'ReportServerTempDB' ORDER BY name;", connection);
+                SqlCommand command = new SqlCommand("SELECT name FROM sys.databases WHERE database_id >6 ORDER BY name desc;", connection);
 
 
 
@@ -101,7 +106,20 @@ namespace Backup
                         {
                             string databaseName = reader["name"].ToString();
                             DatabaseComboBox.Items.Add(databaseName);
+
+
                         }
+
+                        if (DatabaseComboBox.Items.Count > 0)
+                        {
+                            DatabaseComboBox.SelectedIndex = 0; // Optionally, select the first drive by default.
+                        }
+                        else
+                        {
+                            DatabaseComboBox.Items.Add("No Database available ");
+                            DatabaseComboBox.Enabled = false; // Disable the ComboBox if no drives are available.
+                        }
+
                     }
                 }
             }
@@ -121,16 +139,53 @@ namespace Backup
             string connectionString = "server=.;Trusted_Connection=SSPI;Encrypt=false;TrustServerCertificate=true;database=master;UID=sa;password=123";
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
+            string backupPath = DriveComboBox.SelectedItem.ToString();
+            if (backupPath == null)
+            {
+                MessageBox.Show("No available drives found for backup.");
+                return;
+            }
+            backupPath = Path.Combine(backupPath, "Backup");
+            if (!Directory.Exists(backupPath))
+            {
+                try
+                {
+                    Directory.CreateDirectory(backupPath);
+                    // MessageBox.Show("Folder created successfully.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error creating folder: " + ex.Message);
+                }
+            }
 
             String db = DatabaseComboBox.SelectedItem.ToString();
+            String Drv = DriveComboBox.SelectedItem.ToString();
 
             try
             {
                 {
-                    string backupQuery = $"BACKUP DATABASE {db} TO DISK = 'D:\\Backup\\{db}.bak';";
+                    string backupQuery = $"BACKUP DATABASE {db} TO DISK = '{Drv}Backup\\{db}.bak' WITH INIT;";
                     SqlCommand command = new SqlCommand(backupQuery, connection);
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Backup completed successfully.");
+
+                    string title = "Close Window";
+                    MessageBoxButtons buttons = MessageBoxButtons.OKCancel;
+                    DialogResult result = MessageBox.Show("Backup completed successfully.", title, buttons, MessageBoxIcon.Information);
+                    if (result == DialogResult.OK)
+                    {
+                        this.Close();
+                        Form1 f1 = new Form1();
+                        f1.Close();
+
+                    }
+                    else
+                    {
+
+                        button1.Focus();
+
+                    }
+
 
 
                 }
@@ -148,7 +203,25 @@ namespace Backup
         {
 
 
-            string backupPath = "D:\\Backup"; // Set the backup path here
+            // Set the backup path here
+            String Drv = DriveComboBox.SelectedItem.ToString();
+
+
+            string backupPath = $"{Drv}";
+           
+            backupPath = Path.Combine(backupPath, "Backup");
+            if (!Directory.Exists(backupPath))
+            {
+                try
+                {
+                    Directory.CreateDirectory(backupPath);
+                    // MessageBox.Show("Folder created successfully.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error creating folder: " + ex.Message);
+                }
+            }
 
             try
             {
@@ -163,6 +236,9 @@ namespace Backup
 
         }
 
+        private void DatabaseComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+        }
     }
 }

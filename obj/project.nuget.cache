@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NK6l4ZqFaJNVbCZW+B65bbpZOiL8X/1rqQH6dmD/t3HwN6vDCmSHIcK9p8AZGYSewVr43fF+mE+8aoob9+TzOw==",
+  "dgSpecHash": "SnMpJ1H6Cshu9az2plpp0R9rI2jqSXN/pAKPUBb5HqIRauykjkChZMA+Ks+bFC4cUrv1fpiFzIkouxM+lwG2bA==",
   "success": true,
-  "projectFilePath": "d:\\Backup\\Backup.csproj",
+  "projectFilePath": "d:\\BackupCode\\Backup.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\softw\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\softw\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
@@ -53,11 +53,7 @@
     "C:\\Users\\softw\\.nuget\\packages\\system.text.json\\4.7.2\\system.text.json.4.7.2.nupkg.sha512",
     "C:\\Users\\softw\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\softw\\.nuget\\packages\\system.valuetuple\\4.5.0\\system.valuetuple.4.5.0.nupkg.sha512",
-    "C:\\Users\\softw\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512",
-    "C:\\Users\\softw\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.22\\microsoft.netcore.app.ref.6.0.22.nupkg.sha512",
-    "C:\\Users\\softw\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.22\\microsoft.windowsdesktop.app.ref.6.0.22.nupkg.sha512",
-    "C:\\Users\\softw\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.22\\microsoft.aspnetcore.app.ref.6.0.22.nupkg.sha512",
-    "C:\\Users\\softw\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.22\\microsoft.netcore.app.host.win-x64.6.0.22.nupkg.sha512"
+    "C:\\Users\\softw\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }
